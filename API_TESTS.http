@@ -1,0 +1,151 @@
+# Примеры запросов для тестирования API банкомата с конвертацией валют
+
+## 1. Аутентификация пользователя (балансы конвертируются из BYN)
+POST http://localhost:8080/auth
+Content-Type: application/json
+
+{
+    "cardNumber": "1111111111111111",
+    "password": "1234"
+}
+
+## 2. Получение балансов (USD и EUR конвертируются из BYN)
+GET http://localhost:8080/balance/1111111111111111
+
+## 3. Снятие денег в BYN
+POST http://localhost:8080/withdraw
+Content-Type: application/json
+
+{
+    "cardNumber": "1111111111111111",
+    "amount": 1000.00,
+    "currency": "byn"
+}
+
+## 4. Снятие денег в USD (конвертируется в BYN)
+POST http://localhost:8080/withdraw
+Content-Type: application/json
+
+{
+    "cardNumber": "1111111111111111",
+    "amount": 100.00,
+    "currency": "usd"
+}
+
+## 5. Проверка баланса после снятия
+GET http://localhost:8080/balance/1111111111111111
+
+## 6. Пополнение счета в BYN
+POST http://localhost:8080/deposit
+Content-Type: application/json
+
+{
+    "cardNumber": "1111111111111111",
+    "amount": 5000.00,
+    "currency": "byn"
+}
+
+## 7. Пополнение счета в USD
+POST http://localhost:8080/deposit
+Content-Type: application/json
+
+{
+    "cardNumber": "1111111111111111",
+    "amount": 1000.00,
+    "currency": "usd"
+}
+
+## 8. Перевод денег другому пользователю в BYN
+POST http://localhost:8080/transfer
+Content-Type: application/json
+
+{
+    "fromCardNumber": "1111111111111111",
+    "toCardNumber": "2222222222222222",
+    "amount": 5000.00,
+    "currency": "byn"
+}
+
+## 9. Перевод денег в USD (конвертируется в BYN)
+POST http://localhost:8080/transfer
+Content-Type: application/json
+
+{
+    "fromCardNumber": "1111111111111111",
+    "toCardNumber": "2222222222222222",
+    "amount": 100.00,
+    "currency": "usd"
+}
+
+## 10. Оплата электроэнергии (ELEC001)
+POST http://localhost:8080/payment
+Content-Type: application/json
+
+{
+    "cardNumber": "1111111111111111",
+    "serviceCode": "ELEC001",
+    "currency": "byn"
+}
+
+## 11. Оплата водоснабжения (WATER002)
+POST http://localhost:8080/payment
+Content-Type: application/json
+
+{
+    "cardNumber": "1111111111111111",
+    "serviceCode": "WATER002",
+    "currency": "byn"
+}
+
+## 12. Оплата газа (GAS003)
+POST http://localhost:8080/payment
+Content-Type: application/json
+
+{
+    "cardNumber": "1111111111111111",
+    "serviceCode": "GAS003",
+    "currency": "byn"
+}
+
+## 13. Оплата мобильной связи (PHONE004)
+POST http://localhost:8080/payment
+Content-Type: application/json
+
+{
+    "cardNumber": "1111111111111111",
+    "serviceCode": "PHONE004",
+    "currency": "byn"
+}
+
+## 14. Оплата интернета (INTERNET005)
+POST http://localhost:8080/payment
+Content-Type: application/json
+
+{
+    "cardNumber": "1111111111111111",
+    "serviceCode": "INTERNET005",
+    "currency": "byn"
+}
+
+## 15. Проверка баланса после оплаты услуг
+GET http://localhost:8080/balance/1111111111111111
+
+## 16. Тест ошибки - попытка оплаты несуществующей услуги
+POST http://localhost:8080/payment
+Content-Type: application/json
+
+{
+    "cardNumber": "1111111111111111",
+    "serviceCode": "INVALID001",
+    "currency": "byn"
+}
+
+## 17. Тест ошибки - попытка оплаты с недостаточными средствами
+POST http://localhost:8080/payment
+Content-Type: application/json
+
+{
+    "cardNumber": "2222222222222222",
+    "serviceCode": "ELEC001",
+    "currency": "byn"
+}

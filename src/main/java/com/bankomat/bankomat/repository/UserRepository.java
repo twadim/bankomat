@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
  UserEntity findUserEntityByCardNumberAndPinCode(String cardNumber, String pinCode);
+ UserEntity findUserEntityByCardNumber(String cardNumber);
 
 }

@@ -1,20 +1,23 @@
 package com.bankomat.bankomat.response;
 
 import java.math.BigDecimal;
-import static com.bankomat.bankomat.services.CurrencyRates.*;
-public class UserResponse {
 
-    private String userName;
+public class BalanceResponse {
+
     private BigDecimal balanceByn;
     private BigDecimal balanceUsd;
     private BigDecimal balanceEur;
 
-    public String getUserName() {
-        return userName;
+    private String message;
+
+    public BalanceResponse() {
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public BalanceResponse(String message, BigDecimal balanceByn, BigDecimal balanceUsd, BigDecimal balanceEur) {
+        this.message = message;
+        this.balanceByn = balanceByn;
+        this.balanceUsd = balanceUsd;
+        this.balanceEur = balanceEur;
     }
 
     public BigDecimal getBalanceByn() {
@@ -26,8 +29,7 @@ public class UserResponse {
     }
 
     public BigDecimal getBalanceUsd() {
-
-        return convertBynToUsd(this.getBalanceByn());
+        return balanceUsd;
     }
 
     public void setBalanceUsd(BigDecimal balanceUsd) {
@@ -35,10 +37,19 @@ public class UserResponse {
     }
 
     public BigDecimal getBalanceEur() {
-        return  convertBynToEur(this.getBalanceByn());
+        return balanceEur;
     }
 
     public void setBalanceEur(BigDecimal balanceEur) {
         this.balanceEur = balanceEur;
+    }
+
+    @Override
+    public String toString() {
+        return "BalanceResponse{" +
+                "balanceByn=" + balanceByn +
+                ", balanceUsd=" + balanceUsd +
+                ", balanceEur=" + balanceEur +
+                '}';
     }
 }

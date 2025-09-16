@@ -1,7 +1,10 @@
 package com.bankomat.bankomat.response;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 import static com.bankomat.bankomat.services.CurrencyRates.*;
+@Data
 public class UserResponse {
 
     private String userName;
@@ -9,36 +12,5 @@ public class UserResponse {
     private BigDecimal balanceUsd;
     private BigDecimal balanceEur;
 
-    public String getUserName() {
-        return userName;
-    }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public BigDecimal getBalanceByn() {
-        return balanceByn;
-    }
-
-    public void setBalanceByn(BigDecimal balanceByn) {
-        this.balanceByn = balanceByn;
-    }
-
-    public BigDecimal getBalanceUsd() {
-
-        return convertBynToUsd(this.getBalanceByn());
-    }
-
-    public void setBalanceUsd(BigDecimal balanceUsd) {
-        this.balanceUsd = balanceUsd;
-    }
-
-    public BigDecimal getBalanceEur() {
-        return  convertBynToEur(this.getBalanceByn());
-    }
-
-    public void setBalanceEur(BigDecimal balanceEur) {
-        this.balanceEur = balanceEur;
-    }
 }

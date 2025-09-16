@@ -1,7 +1,9 @@
 package com.bankomat.bankomat.response;
 
-import java.math.BigDecimal;
+import lombok.Data;
 
+import java.math.BigDecimal;
+@Data
 public class WithdrawResponse {
 
     private Boolean success;
@@ -9,9 +11,6 @@ public class WithdrawResponse {
     private BigDecimal remainingBalanceByn;
     private BigDecimal remainingBalanceUsd;
     private BigDecimal remainingBalanceEur;
-
-    public WithdrawResponse(){
-    }
 
     public WithdrawResponse(Boolean success, String message, BigDecimal remainingBalanceByn, BigDecimal remainingBalanceUsd, BigDecimal remainingBalanceEur){
         this.success = success;
@@ -21,55 +20,6 @@ public class WithdrawResponse {
         this.remainingBalanceEur = remainingBalanceEur;
     }
     
-    public Boolean getSuccess() {
-        return success;
-    }
 
-    public void setSuccess(Boolean success) {
-        this.success = success;
-    }
-    
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-    
-    public BigDecimal getRemainingBalanceByn() {
-        return remainingBalanceByn;
-    }
-    
-    public void setRemainingBalanceByn(BigDecimal remainingBalanceByn) {
-        this.remainingBalanceByn = remainingBalanceByn;
-    }
-    
-    public BigDecimal getRemainingBalanceUsd() {
-        return remainingBalanceUsd;
-    }
-    
-    public void setRemainingBalanceUsd(BigDecimal remainingBalanceUsd) {
-        this.remainingBalanceUsd = remainingBalanceUsd;
-    }
-    
-    public BigDecimal getRemainingBalanceEur() {
-        return remainingBalanceEur;
-    }
-    
-    public void setRemainingBalanceEur(BigDecimal remainingBalanceEur) {
-        this.remainingBalanceEur = remainingBalanceEur;
-    }
-
-    @Override
-    public String toString() {
-        return "WithdrawResponse{" +
-                "success=" + success +
-                ", message=" + message +
-                ", remainingBalanceByn=" + remainingBalanceByn +
-                ", remainingBalanceUsd=" + remainingBalanceUsd +
-                ", remainingBalanceEur=" + remainingBalanceEur +
-                '}';
-    }
 
 }

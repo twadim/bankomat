@@ -22,7 +22,7 @@ public class CurrencyServiceImpl implements CurrencyService {
             case "eur":
                 return convertEurToByn(amount);
             default:
-                throw new IllegalArgumentException("Invalid currency");
+                throw new IllegalArgumentException("Недопустимая валюта");
         }
     }
 
@@ -38,19 +38,19 @@ public class CurrencyServiceImpl implements CurrencyService {
             case "eur":
                 return convertBynToEur(bynAmount);
             default:
-                throw new IllegalArgumentException("Invalid currency");
+                throw new IllegalArgumentException("Недопустимая валюта");
         }
     }
 
     @Override
     public void validateCurrency(String currency) {
         if (currency == null || currency.trim().isEmpty()) {
-            throw new IllegalArgumentException("Currency cannot be null or empty");
+            throw new IllegalArgumentException("Валюта не может быть пустой");
         }
         
         String lowerCurrency = currency.toLowerCase();
         if (!lowerCurrency.equals("byn") && !lowerCurrency.equals("usd") && !lowerCurrency.equals("eur")) {
-            throw new IllegalArgumentException("Invalid currency: " + currency);
+            throw new IllegalArgumentException("Недопустимая валюта: " + currency);
         }
     }
 }

@@ -24,7 +24,7 @@ public class AccountServiceImpl implements AccountService {
         BigDecimal currentBalance = account.getBalanceByn();
 
         if (currentBalance.compareTo(amountByn) < 0) {
-            throw new InsufficientFundsException("Insufficient funds");
+            throw new InsufficientFundsException("Недостаточно средств");
         }
 
         account.setBalanceByn(currentBalance.subtract(amountByn));
@@ -47,7 +47,7 @@ public class AccountServiceImpl implements AccountService {
         BigDecimal fromBalance = fromAccount.getBalanceByn();
 
         if (fromBalance.compareTo(amountByn) < 0) {
-            throw new InsufficientFundsException("Insufficient funds");
+            throw new InsufficientFundsException("Недостаточно средств");
         }
 
         fromAccount.setBalanceByn(fromBalance.subtract(amountByn));

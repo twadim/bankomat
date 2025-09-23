@@ -15,7 +15,6 @@ import com.bankomat.bankomat.response.UserResponse;
 import com.bankomat.bankomat.response.WithdrawResponse;
 import com.bankomat.bankomat.services.AccountService;
 import com.bankomat.bankomat.services.AtmServices;
-import com.bankomat.bankomat.services.CurrencyService;
 import com.bankomat.bankomat.services.ValidationService;
 
 import static com.bankomat.bankomat.services.CurrencyRates.*;
@@ -35,15 +34,15 @@ public class AtmServiceImpl implements AtmServices {
     private final ValidationService validationService;
     private final ServiceRepository serviceRepository;
     private final AccountService accountService;
-    private final CurrencyService currencyService;
 
-    public AtmServiceImpl(UserRepository userRepository, AccountRepository accountRepository, ServiceRepository serviceRepository, ValidationService validationService, AccountService accountService, CurrencyService currencyService) {
+
+    public AtmServiceImpl(UserRepository userRepository, AccountRepository accountRepository, ServiceRepository serviceRepository, ValidationService validationService, AccountService accountService) {
         this.userRepository = userRepository;
         this.accountRepository = accountRepository;
         this.serviceRepository = serviceRepository;
         this.validationService = validationService;
         this.accountService = accountService;
-        this.currencyService = currencyService;
+
     }
 
     @Transactional
@@ -64,14 +63,14 @@ public class AtmServiceImpl implements AtmServices {
         BigDecimal servicePrice = service.getPriceByn();
 
         if(currentBalance.compareTo(servicePrice) < 0){
-            throw new InsufficientFundsException("Insufficient funds"); 
+            throw new InsufficientFundsException("Недостаточно средств"); 
            
         }
         else {
 
             account.setBalanceByn(currentBalance.subtract(servicePrice));
             accountRepository.save(account);
-            return new PaymentResponse(true, "Payment completed", service.getServiceName(), servicePrice, account.getBalanceByn(), convertBynToUsd(account.getBalanceByn()), convertBynToEur(account.getBalanceByn()));
+            return new PaymentResponse(true, "Оплата выполнена", service.getServiceName(), servicePrice, account.getBalanceByn(), convertBynToUsd(account.getBalanceByn()), convertBynToEur(account.getBalanceByn()));
         }
 
     }
@@ -127,7 +126,7 @@ public class AtmServiceImpl implements AtmServices {
         // Сохраняем изменения
         accountRepository.save(account);    
         
-        return new WithdrawResponse(true, "Withdrawal successful", 
+        return new WithdrawResponse(true, "Снятие выполнено успешно", 
             account.getBalanceByn(), convertBynToUsd(account.getBalanceByn()), convertBynToEur(account.getBalanceByn()));
     }
 
@@ -144,7 +143,7 @@ public DepositResponse depositMoney(String cardNumber, BigDecimal amount, String
     accountService.deposit(account, amount, currency);
    
     accountRepository.save(account);
-    return new DepositResponse(true, "Deposit successful", account.getBalanceByn(), convertBynToUsd(account.getBalanceByn()), convertBynToEur(account.getBalanceByn()));
+    return new DepositResponse(true, "Пополнение выполнено успешно", account.getBalanceByn(), convertBynToUsd(account.getBalanceByn()), convertBynToEur(account.getBalanceByn()));
 
 }
 
@@ -162,7 +161,7 @@ public TransferResponse transferMoney(String fromCardNumber, String toCardNumber
     
     // Проверяем, что не переводим самому себе
     if(fromCardNumber.equals(toCardNumber)){
-        throw new IllegalArgumentException("Cannot transfer to yourself");
+        throw new IllegalArgumentException("Нельзя переводить деньги самому себе");
       
     }
     
@@ -181,7 +180,7 @@ public TransferResponse transferMoney(String fromCardNumber, String toCardNumber
     accountRepository.save(senderAccount);
     accountRepository.save(receiverAccount);
     
-    return new TransferResponse(true, "Transfer successful");
+    return new TransferResponse(true, "Перевод выполнен успешно");
 }
 
         

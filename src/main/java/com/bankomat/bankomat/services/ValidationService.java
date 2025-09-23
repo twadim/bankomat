@@ -16,22 +16,22 @@ public class ValidationService {
     public void  validationUser(UserEntity user){
 
        if(user == null){
-            throw new UserNotFoundException("User not found");  
+            throw new UserNotFoundException("Пользователь не найден");  
         }
 
         if(user.getUserId() == null){
-            throw new IllegalArgumentException("User ID cannot be null");
+            throw new IllegalArgumentException("ID пользователя не может быть пустым");
         }
     }
 
     public void  validationAccount(AccountEntity account){
 
         if(account == null){
-            throw new AccountNotFoundException("Account not found");
+            throw new AccountNotFoundException("Аккаунт не найден");
         }
  
         if(account.getAccountId() == null){
-            throw new IllegalArgumentException("Account ID cannot be null");
+            throw new IllegalArgumentException("ID аккаунта не может быть пустым");
         }
      }
 
@@ -39,7 +39,7 @@ public class ValidationService {
      public void  validationService(ServiceEntity service){
 
         if(service == null){
-            throw new IllegalArgumentException("Service not found or inactive");
+            throw new IllegalArgumentException("Услуга не найдена или неактивна");
         }
  
     

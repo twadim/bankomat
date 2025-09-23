@@ -16,7 +16,7 @@ public class WithdrawResponse {
     @Schema(description = "Успешность операции", example = "true")
     private Boolean success;
 
-    @Schema(description = "Сообщение о результате", example = "Withdrawal successful")
+    @Schema(description = "Сообщение о результате", example = "Снятие выполнено успешно")
     private String message;
 
     @Schema(description = "Баланс в BYN", example = "50000.00")

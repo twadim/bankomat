@@ -1,20 +1,22 @@
 package com.bankomat.bankomat.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PaymentResponse {
 
-    public PaymentResponse(Boolean success, String message, String serviceName, BigDecimal amountPaid,  BigDecimal remainingBalanceByn,  BigDecimal remainingBalanceUsd,  BigDecimal remainingBalanceEur){
-        this.success = success;
-        this.message = message;
-        this.serviceName = serviceName;
-        this.amountPaid = amountPaid;
-        this.remainingBalanceByn = remainingBalanceByn;
-        this.remainingBalanceUsd = remainingBalanceUsd;
-        this.remainingBalanceEur = remainingBalanceEur;
-    }
+    private Boolean success;
+    private String message;
+    private String serviceName;
+    private BigDecimal amountPaid;
+    private BigDecimal remainingBalanceByn;
+    private BigDecimal remainingBalanceUsd;
+    private BigDecimal remainingBalanceEur;
 
     public PaymentResponse(Boolean success, String message){
         this.success = success;
@@ -25,15 +27,6 @@ public class PaymentResponse {
         this.remainingBalanceUsd = BigDecimal.ZERO;
         this.remainingBalanceEur = BigDecimal.ZERO;
     }
-
-
-    private Boolean success;
-    private String message;
-    private String serviceName;
-    private BigDecimal amountPaid;
-    private BigDecimal remainingBalanceByn;
-    private BigDecimal remainingBalanceUsd;
-    private BigDecimal remainingBalanceEur;
 
 
 }

@@ -1,9 +1,13 @@
 package com.bankomat.bankomat.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class DepositResponse {
 
     private Boolean success;
@@ -11,17 +15,5 @@ public class DepositResponse {
     private BigDecimal remainingBalanceByn;
     private BigDecimal remainingBalanceUsd;
     private BigDecimal remainingBalanceEur;
-
-
-
-    public DepositResponse(Boolean success, String message, BigDecimal remainingBalanceByn, BigDecimal remainingBalanceUsd, BigDecimal remainingBalanceEur){
-        this.success = success;
-        this.message = message;
-        this.remainingBalanceByn = remainingBalanceByn;
-        this.remainingBalanceUsd = remainingBalanceUsd;
-        this.remainingBalanceEur = remainingBalanceEur;
-    }
-
-
 
 }

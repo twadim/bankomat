@@ -1,22 +1,19 @@
 package com.bankomat.bankomat.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BalanceResponse {
 
+    private String message;
     private BigDecimal balanceByn;
     private BigDecimal balanceUsd;
     private BigDecimal balanceEur;
-    private String message;
-
-    public BalanceResponse(String message, BigDecimal balanceByn, BigDecimal balanceUsd, BigDecimal balanceEur) {
-        this.message = message;
-        this.balanceByn = balanceByn;
-        this.balanceUsd = balanceUsd;
-        this.balanceEur = balanceEur;
-    }
 
 
 }

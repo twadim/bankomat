@@ -1,10 +1,14 @@
 package com.bankomat.bankomat.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import static com.bankomat.bankomat.services.CurrencyRates.*;
+
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserResponse {
 
     private String userName;

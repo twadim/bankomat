@@ -1,119 +1,119 @@
-### Тестирование функции перевода денег
+### 🏦 Тестирование API Банкомата
 
-### 1. Авторизация пользователя 1
-POST http://localhost:8080/auth
+### 1. 🔐 Авторизация пользователя 1
+POST http://localhost:8080/api/v1/auth
 Content-Type: application/json
 
 {
-    "cardNumber": "1234567890123456",
-    "pinCode": "1234"
+    "cardNumber": "1111111111111111",
+    "password": "1234"
 }
 
-### 2. Авторизация пользователя 2
-POST http://localhost:8080/auth
+### 2. 🔐 Авторизация пользователя 2
+POST http://localhost:8080/api/v1/auth
 Content-Type: application/json
 
 {
-    "cardNumber": "9876543210987654",
-    "pinCode": "5678"
+    "cardNumber": "2222222222222222",
+    "password": "5678"
 }
 
-### 3. Проверка баланса пользователя 1 (до перевода)
-GET http://localhost:8080/balance/1234567890123456
+### 3. 💳 Проверка баланса пользователя 1 (до перевода)
+GET http://localhost:8080/api/v1/balance/1111111111111111
 
-### 4. Проверка баланса пользователя 2 (до перевода)
-GET http://localhost:8080/balance/9876543210987654
+### 4. 💳 Проверка баланса пользователя 2 (до перевода)
+GET http://localhost:8080/api/v1/balance/2222222222222222
 
-### 5. Перевод 100 BYN от пользователя 1 к пользователю 2
-POST http://localhost:8080/transfer
+### 5. 🔄 Перевод 100 BYN от пользователя 1 к пользователю 2
+POST http://localhost:8080/api/v1/transfer
 Content-Type: application/json
 
 {
-    "fromCardNumber": "1234567890123456",
-    "toCardNumber": "9876543210987654",
+    "fromCardNumber": "1111111111111111",
+    "toCardNumber": "2222222222222222",
     "amount": 100.00,
-    "currency": "BYN"
+    "currency": "byn"
 }
 
-### 6. Перевод 50 USD от пользователя 1 к пользователю 2
-POST http://localhost:8080/transfer
+### 6. 🔄 Перевод 50 USD от пользователя 1 к пользователю 2
+POST http://localhost:8080/api/v1/transfer
 Content-Type: application/json
 
 {
-    "fromCardNumber": "1234567890123456",
-    "toCardNumber": "9876543210987654",
+    "fromCardNumber": "1111111111111111",
+    "toCardNumber": "2222222222222222",
     "amount": 50.00,
-    "currency": "USD"
+    "currency": "usd"
 }
 
-### 7. Перевод 25 EUR от пользователя 1 к пользователю 2
-POST http://localhost:8080/transfer
+### 7. 🔄 Перевод 25 EUR от пользователя 1 к пользователю 2
+POST http://localhost:8080/api/v1/transfer
 Content-Type: application/json
 
 {
-    "fromCardNumber": "1234567890123456",
-    "toCardNumber": "9876543210987654",
+    "fromCardNumber": "1111111111111111",
+    "toCardNumber": "2222222222222222",
     "amount": 25.00,
-    "currency": "EUR"
+    "currency": "eur"
 }
 
-### 8. Проверка баланса пользователя 1 (после переводов)
-GET http://localhost:8080/balance/1234567890123456
+### 8. 💳 Проверка баланса пользователя 1 (после переводов)
+GET http://localhost:8080/api/v1/balance/1111111111111111
 
-### 9. Проверка баланса пользователя 2 (после переводов)
-GET http://localhost:8080/balance/9876543210987654
+### 9. 💳 Проверка баланса пользователя 2 (после переводов)
+GET http://localhost:8080/api/v1/balance/2222222222222222
 
-### 10. Тест ошибок - перевод самому себе
-POST http://localhost:8080/transfer
+### 10. ❌ Тест ошибок - перевод самому себе
+POST http://localhost:8080/api/v1/transfer
 Content-Type: application/json
 
 {
-    "fromCardNumber": "1234567890123456",
-    "toCardNumber": "1234567890123456",
+    "fromCardNumber": "1111111111111111",
+    "toCardNumber": "1111111111111111",
     "amount": 10.00,
-    "currency": "BYN"
+    "currency": "byn"
 }
 
-### 11. Тест ошибок - недостаточно средств
-POST http://localhost:8080/transfer
+### 11. ❌ Тест ошибок - недостаточно средств
+POST http://localhost:8080/api/v1/transfer
 Content-Type: application/json
 
 {
-    "fromCardNumber": "1234567890123456",
-    "toCardNumber": "9876543210987654",
+    "fromCardNumber": "1111111111111111",
+    "toCardNumber": "2222222222222222",
     "amount": 999999.00,
-    "currency": "BYN"
+    "currency": "byn"
 }
 
-### 12. Тест ошибок - несуществующий получатель
-POST http://localhost:8080/transfer
+### 12. ❌ Тест ошибок - несуществующий получатель
+POST http://localhost:8080/api/v1/transfer
 Content-Type: application/json
 
 {
-    "fromCardNumber": "1234567890123456",
+    "fromCardNumber": "1111111111111111",
     "toCardNumber": "0000000000000000",
     "amount": 10.00,
-    "currency": "BYN"
+    "currency": "byn"
 }
 
-### 13. Тест ошибок - неверная валюта
-POST http://localhost:8080/transfer
+### 13. ❌ Тест ошибок - неверная валюта
+POST http://localhost:8080/api/v1/transfer
 Content-Type: application/json
 
 {
-    "fromCardNumber": "1234567890123456",
-    "toCardNumber": "9876543210987654",
+    "fromCardNumber": "1111111111111111",
+    "toCardNumber": "2222222222222222",
     "amount": 10.00,
-    "currency": "RUB"
+    "currency": "rub"
 }
 
-### 14. Тест ошибок - отрицательная сумма
-POST http://localhost:8080/transfer
+### 14. ❌ Тест ошибок - отрицательная сумма
+POST http://localhost:8080/api/v1/transfer
 Content-Type: application/json
 
 {
-    "fromCardNumber": "1234567890123456",
-    "toCardNumber": "9876543210987654",
+    "fromCardNumber": "1111111111111111",
+    "toCardNumber": "2222222222222222",
     "amount": -10.00,
-    "currency": "BYN"
+    "currency": "byn"
 }

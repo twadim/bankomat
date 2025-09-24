@@ -45,7 +45,7 @@ public class BaseControllers {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Успешная аутентификация"),
         @ApiResponse(responseCode = "400", description = "Неверные данные"),
-        @ApiResponse(responseCode = "404", description = "Пользователь не найден")
+        @ApiResponse(responseCode = "401", description = "Пользователь не найден")
     })
     public ResponseEntity<UserResponse> authUser(
         @Parameter(description = "Данные для аутентификации", required = true)
@@ -63,7 +63,7 @@ public class BaseControllers {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Баланс получен успешно"),
         @ApiResponse(responseCode = "400", description = "Неверные данные"),
-        @ApiResponse(responseCode = "404", description = "Пользователь не найден")
+        @ApiResponse(responseCode = "401", description = "Пользователь не найден")
     })
     public ResponseEntity<BalanceResponse> getBalance(
         @Parameter(description = "Номер карты", required = true)
@@ -84,7 +84,7 @@ public class BaseControllers {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Деньги сняты успешно"),
         @ApiResponse(responseCode = "400", description = "Неверные данные или недостаточно средств"),
-        @ApiResponse(responseCode = "404", description = "Пользователь не найден")
+        @ApiResponse(responseCode = "401", description = "Пользователь не найден")
     })
     public ResponseEntity<WithdrawResponse> withdrawMoney(
         @Parameter(description = "Данные для снятия денег", required = true)
@@ -102,7 +102,7 @@ public class BaseControllers {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Счет пополнен успешно"),
         @ApiResponse(responseCode = "400", description = "Неверные данные"),
-        @ApiResponse(responseCode = "404", description = "Пользователь не найден")
+        @ApiResponse(responseCode = "401", description = "Пользователь не найден")
     })
     public ResponseEntity<DepositResponse> depositMoney(
         @Parameter(description = "Данные для пополнения счета", required = true)
@@ -121,7 +121,7 @@ public class BaseControllers {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Перевод выполнен успешно"),
         @ApiResponse(responseCode = "400", description = "Неверные данные или недостаточно средств"),
-        @ApiResponse(responseCode = "404", description = "Пользователь не найден")
+        @ApiResponse(responseCode = "401", description = "Пользователь не найден")
     })
     public ResponseEntity<TransferResponse> transferMoney(
         @Parameter(description = "Данные для перевода", required = true)
@@ -139,7 +139,7 @@ public class BaseControllers {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Оплата выполнена успешно"),
         @ApiResponse(responseCode = "400", description = "Неверные данные или недостаточно средств"),
-        @ApiResponse(responseCode = "404", description = "Пользователь или услуга не найдены")
+        @ApiResponse(responseCode = "401", description = "Пользователь или услуга не найдены")
     })
     public ResponseEntity<PaymentResponse> payForService(
         @Parameter(description = "Данные для оплаты", required = true)

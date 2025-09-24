@@ -30,14 +30,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException ex) {
         ErrorResponse error = new ErrorResponse("Пользователь не найден", "USER_NOT_FOUND");
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
 
      // Обрабатываем ошибки, когда аккаунт не найден
      @ExceptionHandler(AccountNotFoundException.class)
      public ResponseEntity<ErrorResponse> handleAccountNotFound(AccountNotFoundException ex) {
          ErrorResponse error = new ErrorResponse("Аккаунт не найден", "ACCAUNT_NOT_FOUND");
-         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
      }
     
     // Обрабатываем ошибки, когда недостаточно денег

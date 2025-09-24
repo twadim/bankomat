@@ -1,4 +1,4 @@
-package com.bankomat.bankomat.services;
+package com.bankomat.bankomat.service;
 
 import com.bankomat.bankomat.entity.AccountEntity;
 import java.math.BigDecimal;

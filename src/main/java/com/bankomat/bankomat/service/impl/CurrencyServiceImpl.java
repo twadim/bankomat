@@ -1,11 +1,13 @@
-package com.bankomat.bankomat.services.impl;
+package com.bankomat.bankomat.service.impl;
 
-import com.bankomat.bankomat.services.CurrencyService;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
+import com.bankomat.bankomat.service.CurrencyService;
 
-import static com.bankomat.bankomat.services.CurrencyRates.*;
+import static com.bankomat.bankomat.service.CurrencyRates.*;
+
+import java.math.BigDecimal;
+import java.util.Objects;
 
 @Service
 public class CurrencyServiceImpl implements CurrencyService {
@@ -44,7 +46,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public void validateCurrency(String currency) {
-        if (currency == null || currency.trim().isEmpty()) {
+        if (Objects.isNull(currency) || currency.trim().isEmpty()) {
             throw new IllegalArgumentException("Валюта не может быть пустой");
         }
         

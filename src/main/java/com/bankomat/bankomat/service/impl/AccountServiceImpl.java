@@ -1,9 +1,10 @@
-package com.bankomat.bankomat.services.impl;
+package com.bankomat.bankomat.service.impl;
 
 import com.bankomat.bankomat.entity.AccountEntity;
 import com.bankomat.bankomat.exception.InsufficientFundsException;
-import com.bankomat.bankomat.services.AccountService;
-import com.bankomat.bankomat.services.CurrencyService;
+import com.bankomat.bankomat.service.AccountService;
+import com.bankomat.bankomat.service.CurrencyService;
+
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

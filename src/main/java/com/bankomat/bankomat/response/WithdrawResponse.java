@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class WithdrawResponse {
 
     @Schema(description = "Успешность операции", example = "true")
-    private Boolean success;
+    private boolean success;
 
     @Schema(description = "Сообщение о результате", example = "Снятие выполнено успешно")
     private String message;

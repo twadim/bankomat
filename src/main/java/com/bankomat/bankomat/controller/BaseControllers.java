@@ -1,5 +1,6 @@
-package com.bankomat.bankomat.controllers;
+package com.bankomat.bankomat.controller;
 
+import com.bankomat.bankomat.request.BalanceRequest;
 import com.bankomat.bankomat.request.DepositRequest;
 import com.bankomat.bankomat.request.PaymentRequest;
 import com.bankomat.bankomat.request.TransferRequest;
@@ -11,7 +12,8 @@ import com.bankomat.bankomat.response.PaymentResponse;
 import com.bankomat.bankomat.response.TransferResponse;
 import com.bankomat.bankomat.response.UserResponse;
 import com.bankomat.bankomat.response.WithdrawResponse;
-import com.bankomat.bankomat.services.AtmServices;
+import com.bankomat.bankomat.service.AtmServices;
+
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,12 +21,11 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/atm")
 @Tag(name = "Bankomat API", description = "API для операций банкомата")
 public class BaseControllers {
 
@@ -36,7 +37,7 @@ public class BaseControllers {
 
 
 
-    @PostMapping(value = "/auth")
+    @PostMapping("/auth")
     @Operation(
         summary = "Аутентификация пользователя",
         description = "Проверяет номер карты и PIN-код пользователя"
@@ -46,17 +47,15 @@ public class BaseControllers {
         @ApiResponse(responseCode = "400", description = "Неверные данные"),
         @ApiResponse(responseCode = "404", description = "Пользователь не найден")
     })
-    public ResponseEntity<UserResponse> AuthUser(
+    public ResponseEntity<UserResponse> authUser(
         @Parameter(description = "Данные для аутентификации", required = true)
         @Valid @RequestBody UserAuthRequest userAuthRequest) {
 
+            return ResponseEntity.ok(atmServices.userAuth(userAuthRequest));
 
-        UserResponse userResponse = atmServices.userAuth(userAuthRequest.getCardNumber(),userAuthRequest.getPassword());
-
-        return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/balance/{cardNumber}")
+    @PostMapping("/balance")
     @Operation(
         summary = "Получение баланса",
         description = "Возвращает баланс пользователя в трех валютах (BYN, USD, EUR)"
@@ -68,16 +67,16 @@ public class BaseControllers {
     })
     public ResponseEntity<BalanceResponse> getBalance(
         @Parameter(description = "Номер карты", required = true)
-        @PathVariable String cardNumber) {
+        @RequestBody BalanceRequest balanceRequest) {
 
-        BalanceResponse balance = atmServices.getBalance(cardNumber);
-        
-        return new ResponseEntity<>(balance, HttpStatus.OK);
+            return ResponseEntity.ok(atmServices.getBalance(balanceRequest));
+
+       
     }
 
     
 
-    @PostMapping(value = "/withdraw")
+    @PostMapping("/withdraw")
     @Operation(
         summary = "Снятие денег",
         description = "Снимает указанную сумму с баланса пользователя"
@@ -91,13 +90,11 @@ public class BaseControllers {
         @Parameter(description = "Данные для снятия денег", required = true)
         @Valid @RequestBody WithdrawRequest withdrawRequest) {
 
-        WithdrawResponse withdrawResponse = atmServices.withdrawMoney(withdrawRequest.getCardNumber(), withdrawRequest.getAmount(), withdrawRequest.getCurrency());
-        
-        return new ResponseEntity<>(withdrawResponse, HttpStatus.OK);
+        return ResponseEntity.ok(atmServices.withdrawMoney(withdrawRequest));
 
     }
 
-    @PostMapping(value = "/deposit")
+    @PostMapping("/deposit")
     @Operation(
         summary = "Пополнение счета",
         description = "Пополняет баланс пользователя на указанную сумму"
@@ -111,13 +108,12 @@ public class BaseControllers {
         @Parameter(description = "Данные для пополнения счета", required = true)
         @Valid @RequestBody DepositRequest depositRequest) {
 
-        DepositResponse depositResponse = atmServices.depositMoney(depositRequest.getCardNumber(), depositRequest.getAmount(), depositRequest.getCurrency());
-        
-        return new ResponseEntity<>(depositResponse, HttpStatus.OK);
+            return ResponseEntity.ok(atmServices.depositMoney(depositRequest));
+
     }
 
 
-    @PostMapping(value = "/transfer")
+    @PostMapping("/transfer")
     @Operation(
         summary = "Перевод денег",
         description = "Переводит деньги с одного счета на другой"
@@ -130,16 +126,12 @@ public class BaseControllers {
     public ResponseEntity<TransferResponse> transferMoney(
         @Parameter(description = "Данные для перевода", required = true)
         @Valid @RequestBody TransferRequest transferRequest) {
-    TransferResponse transferResponse = atmServices.transferMoney(
-        transferRequest.getFromCardNumber(), 
-        transferRequest.getToCardNumber(), 
-        transferRequest.getAmount(), 
-        transferRequest.getCurrency()
-    );
-    return new ResponseEntity<>(transferResponse, HttpStatus.OK);
+    
+    return ResponseEntity.ok(atmServices.transferMoney(transferRequest));
+   
 }
 
-    @PostMapping(value = "/payment")
+    @PostMapping("/payment")
     @Operation(
         summary = "Оплата услуг",
         description = "Оплачивает услуги по коду услуги"
@@ -152,8 +144,9 @@ public class BaseControllers {
     public ResponseEntity<PaymentResponse> payForService(
         @Parameter(description = "Данные для оплаты", required = true)
         @Valid @RequestBody PaymentRequest paymentRequest) {
-    PaymentResponse paymentResponse = atmServices.payForService(paymentRequest.getCardNumber(), paymentRequest.getServiceCode(), paymentRequest.getCurrency());
-    return new ResponseEntity<>(paymentResponse, HttpStatus.OK);
+
+    return ResponseEntity.ok(atmServices.payForService(paymentRequest));
+
 }
 
 }

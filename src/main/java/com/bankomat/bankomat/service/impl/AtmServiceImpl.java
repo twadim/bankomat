@@ -1,4 +1,4 @@
-package com.bankomat.bankomat.services.impl;
+package com.bankomat.bankomat.service.impl;
 
 import com.bankomat.bankomat.entity.AccountEntity;
 import com.bankomat.bankomat.entity.ServiceEntity;
@@ -7,17 +7,23 @@ import com.bankomat.bankomat.exception.InsufficientFundsException;
 import com.bankomat.bankomat.repository.AccountRepository;
 import com.bankomat.bankomat.repository.ServiceRepository;
 import com.bankomat.bankomat.repository.UserRepository;
+import com.bankomat.bankomat.request.BalanceRequest;
+import com.bankomat.bankomat.request.DepositRequest;
+import com.bankomat.bankomat.request.PaymentRequest;
+import com.bankomat.bankomat.request.TransferRequest;
+import com.bankomat.bankomat.request.UserAuthRequest;
+import com.bankomat.bankomat.request.WithdrawRequest;
 import com.bankomat.bankomat.response.BalanceResponse;
 import com.bankomat.bankomat.response.DepositResponse;
 import com.bankomat.bankomat.response.PaymentResponse; 
 import com.bankomat.bankomat.response.TransferResponse;
 import com.bankomat.bankomat.response.UserResponse;
 import com.bankomat.bankomat.response.WithdrawResponse;
-import com.bankomat.bankomat.services.AccountService;
-import com.bankomat.bankomat.services.AtmServices;
-import com.bankomat.bankomat.services.ValidationService;
+import com.bankomat.bankomat.service.AccountService;
+import com.bankomat.bankomat.service.AtmServices;
+import com.bankomat.bankomat.service.ValidationService;
 
-import static com.bankomat.bankomat.services.CurrencyRates.*;
+import static com.bankomat.bankomat.service.CurrencyRates.*;
 
 import java.math.BigDecimal;
 
@@ -47,7 +53,10 @@ public class AtmServiceImpl implements AtmServices {
 
     @Transactional
     @Override
-    public PaymentResponse payForService(String cardNumber, String serviceCode, String currency) {
+    public PaymentResponse payForService(PaymentRequest paymentRequest) {
+
+        String cardNumber = paymentRequest.getCardNumber();
+        String serviceCode = paymentRequest.getServiceCode();
 
         UserEntity user = userRepository.findUserEntityByCardNumber(cardNumber);
         validationService.validationUser(user);
@@ -76,7 +85,10 @@ public class AtmServiceImpl implements AtmServices {
     }
 
     @Override
-    public UserResponse userAuth(String cardNumber, String password) {
+    public UserResponse userAuth(UserAuthRequest userAuthRequest) {
+
+        String cardNumber = userAuthRequest.getCardNumber();
+        String password = userAuthRequest.getPassword();
 
         UserResponse userResponse = new UserResponse();
 
@@ -97,7 +109,9 @@ public class AtmServiceImpl implements AtmServices {
     }
 
     @Override
-    public BalanceResponse getBalance(String cardNumber) {
+    public BalanceResponse getBalance(BalanceRequest balanceRequest) {
+
+        String cardNumber = balanceRequest.getCardNumber();
 
         UserEntity user = userRepository.findUserEntityByCardNumber(cardNumber);
         validationService.validationUser(user);
@@ -111,7 +125,11 @@ public class AtmServiceImpl implements AtmServices {
 
     @Transactional
     @Override
-    public WithdrawResponse withdrawMoney(String cardNumber, BigDecimal amount, String currency){  
+    public WithdrawResponse withdrawMoney(WithdrawRequest withdrawRequest){  
+
+        String cardNumber = withdrawRequest.getCardNumber();
+        BigDecimal amount = withdrawRequest.getAmount();
+        String currency = withdrawRequest.getCurrency();
 
         // Проверяем пользователя
         UserEntity user = userRepository.findUserEntityByCardNumber(cardNumber);
@@ -132,7 +150,11 @@ public class AtmServiceImpl implements AtmServices {
 
     @Transactional
     @Override
-public DepositResponse depositMoney(String cardNumber, BigDecimal amount, String currency){
+public DepositResponse depositMoney(DepositRequest depositRequest){
+
+    String cardNumber = depositRequest.getCardNumber();
+    BigDecimal amount = depositRequest.getAmount();
+    String currency = depositRequest.getCurrency();
 
     UserEntity user = userRepository.findUserEntityByCardNumber(cardNumber);
     validationService.validationUser(user);
@@ -148,7 +170,12 @@ public DepositResponse depositMoney(String cardNumber, BigDecimal amount, String
 }
 
     @Transactional
-public TransferResponse transferMoney(String fromCardNumber, String toCardNumber, BigDecimal amount, String currency){
+public TransferResponse transferMoney(TransferRequest transferRequest){
+
+    String fromCardNumber = transferRequest.getFromCardNumber();
+    String toCardNumber = transferRequest.getToCardNumber();
+    BigDecimal amount = transferRequest.getAmount();
+    String currency = transferRequest.getCurrency();
 
     // Проверяем отправителя
     UserEntity sender = userRepository.findUserEntityByCardNumber(fromCardNumber);
